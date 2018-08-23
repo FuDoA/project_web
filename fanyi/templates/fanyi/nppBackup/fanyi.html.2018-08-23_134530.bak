@@ -1,0 +1,25 @@
+<head>
+<script>
+http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js
+</script>
+<script>
+$.ready(function(){
+    $('#get').click(function(){
+        $.post('fanyi',{raw_text:raw_text},
+        function(data,status){
+        $('#jieguo').text(data);});
+   });     
+});
+</script>
+</head>
+<body>
+
+<p > 请输入想要翻译的文本</p>
+<form>
+<input type="text" name="raw_text">
+<button id='get'>提交</button>
+</form>
+<p>结果：</p>
+<p id='jieguo'></p>
+
+</body>
