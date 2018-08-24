@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'fanyi',
     'main',
     'navi',
+    'booklib',
 ]
 
 MIDDLEWARE = [
