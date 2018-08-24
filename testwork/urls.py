@@ -24,4 +24,5 @@ urlpatterns = [
     path('fanyi',fanyi_views.index,name='fanyi'),
     path('',main_views.index,name='main'),
     path('booklib',booklib_views.index,name='booklib'),
+    path('booklib/searchbook',booklib_views.searchbook,name='searchbook'),
 ]
