@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文库</title>
+</head>
+<body>
+{%  include 'navi/navi.html' %}
+{% for book in  books %}
+    <h2>{{ book.book_name }}</h2>
+    <h3><b>作者：</b>{{ book.book_author }}</h3>
+    <h3><b>简介：</b>上传时间：{{ book.book_uploadtime }}</h3>
+
+    <h3><b>简介：</b>{{ book.book_intro }}</h3>
+    <br>
+{%  endfor %}
+
+</body>
+</html>
