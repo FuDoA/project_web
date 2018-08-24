@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from booklib import  views as booklib_views
 from fanyi import views as fanyi_views
 from main import views as main_views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('fanyi',fanyi_views.index,name='fanyi'),
-    path('',main_views.index,name='main')
+    path('',main_views.index,name='main'),
+    path('booklib',booklib_views.index,name='booklib'),
 ]
