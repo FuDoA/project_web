@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>用户注册</title>
@@ -29,9 +28,9 @@
         {#注册#}
         $.ready(function () {
             $('#reg_button').click(function () {
-                $.getJSON('/reg/check',{'reg_id':reg_id},function (result) {
+                $.getJSON('reg/check',{'reg_id':reg_id},function (result) {
                     if (result===100){
-                        $('#input_name_msg').text('该用户名已被注册！');
+                        $('#input_name_msg').html('该用户名已被注册！');
 
                     }
                     else if (result===200){
@@ -43,17 +42,15 @@
         })
 
 </script>
-
 </head>
-<body>
 {%  include 'navi/navi.html' %}
 
 <p>用户注册</p>
 <form>
-    用户名&nbsp;&nbsp;&nbsp;&nbsp;<input id='input_name' name="reg_id"><label id="input_name_msg"></label><br>
-    密码&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id ='input_reg_psw'type="password" name="reg_psw"><label id="input_psw_msg"></label><br>
-    重复密码<input type="password" id="input_reg_psw2" name="reg_psw2"><br>
-    <button id="reg_button"   >注册</button>
+用户名&nbsp;&nbsp;&nbsp;&nbsp;<input id='input_name' name="reg_id"></input><label id="input_name_msg"></label><br>
+密码&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id ='input_reg_psw'type="password" name="reg_psw"></input><label id="input_psw_msg"></label><br>
+重复密码<input type="password" id="input_reg_psw2" name="reg_psw2"></input><br>
+    <button id="reg_button"  type="button">注册</button>
 
 </form>
 
