@@ -18,11 +18,14 @@ from django.urls import path
 from booklib import  views as booklib_views
 from fanyi import views as fanyi_views
 from main import views as main_views
-
+from reg import  views as reg_views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('fanyi',fanyi_views.index,name='fanyi'),
-    path('',main_views.index,name='main'),
-    path('booklib',booklib_views.index,name='booklib'),
-    path('booklib/searchbook',booklib_views.searchbook,name='searchbook'),
+    path('fanyi', fanyi_views.index,name='fanyi'),
+    path('', main_views.index,name='main'),
+    path('booklib', booklib_views.index,name='booklib'),
+    path('booklib/searchbook', booklib_views.searchbook,name='searchbook'),
+    path('reg/', reg_views.index),
+    path('reg/check', reg_views.check),
+    path('reg/reg', reg_views.reg),
 ]
