@@ -5,12 +5,15 @@
     <script src="http://ajax.microsoft.com/ajax/jquery/jquery-3.3.1.min.js"type="text/javascript"></script>
     <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>
     <script>
+        $.ajaxSetup({
+    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
          {#用户名不得为空#}
             $(document).ready(function () {
-                $('#input_name').focusout(function () {
-                    var input_name = $('#input_name').val();
-                    if (input_name ===''){
-                        $('#input_name_msg').html('用户名不得为空');
+                $('#input_id').focusout(function () {
+                    var input_id = $('#input_id').val();
+                    if (input_id ===''){
+                        $('#input_id_msg').html('用户名不得为空');
                         $('#reg_button').attr('disabled',true);}
                     else {
                         $('#reg_button').attr('disabled',false);}
@@ -18,7 +21,7 @@
             });
          {# 密码重复一致 #}
          $(document).ready(function () {
-            $('#input_reg_psw2').focusout(function () {
+            $('#input_reg_psw2,#input_reg_psw').focusout(function () {
                 var reg_psw = $('#input_reg_psw').val();
                 var reg_psw2 = $('#input_reg_psw2').val();
                 if (reg_psw===''||reg_psw2===''){
@@ -35,26 +38,35 @@
         });
         {#注册#}
         $(document).ready(function () {
+
             $('#reg_button').click(function () {
-                $.getJSON('reg/check',{'reg_id':reg_id},function (result) {
-                    if (result===100){
-                        $('#input_name_msg').html('该用户名已被注册！');
+                var reg_id = $('#input_id').val();
+                $.getJSON('check',{'reg_id':reg_id},function (result) {
+                    if (result === 100) {
+                        $('#input_id_msg').html('该用户名已被注册！');
 
                     }
-                    else if (result===200){
+                    else if (result === 200) {
                         var salt = Math.floor(Math.random() * 999999 + 1);
+                        var saltchar = salt.toString();
 
                         var reg_id = $('#input_id').val();
-                        var reg_psw=$('#input_reg_psw').val();
-                        var reg_pswmd5= md5(reg_psw);
-                        $.post('reg/reg',{'reg_id':reg_id,'reg_pswmd5':reg_pswmd5,'reg_salt':salt},function (result) {
-                            if (result=== 300){
-                                $('#input_name_msg').text('注册成功！');
+                        var reg_psw = $('#input_reg_psw').val();
+                        var reg_psw_addsalt = reg_psw + saltchar;
+                        var reg_pswmd5 = md5(reg_psw_addsalt);
+
+                        $.post('/reg/reg',
+                            {'reg_id': reg_id, 'reg_pswmd5': reg_pswmd5, 'reg_salt': salt},
+                            function (result2) {
+
+                                if (result2 =='300') {
+                                    $('#input_id_msg').html('注册成功');
+                                }
+                                else if (result2 === '400') {
+                                    $('#input_id_msg').html('重试');
+                                }
                             }
-                            else if (result ===400 ){
-                                $('#input_name_msg0').text('重试');
-                            }
-                        });
+                        );
                     }
                 });
             });
@@ -65,10 +77,10 @@
 {%  include 'navi/navi.html' %}
 
 <p>用户注册</p>
-<form>
-用户名&nbsp;&nbsp;&nbsp;&nbsp;<input id='input_name' name="reg_id"></input><label id="input_name_msg"></label><br>
-密码&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id ='input_reg_psw'type="password" name="reg_psw"></input><label id="input_psw_msg"></label><br>
-重复密码<input type="password" id="input_reg_psw2" name="reg_psw2"></input><br>
+<form>{% csrf_token %}
+用户名&nbsp;&nbsp;&nbsp;&nbsp;<input id='input_id' ></input><label id="input_id_msg"></label><br>
+密码&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;<input id ='input_reg_psw'type="password" ></input><label id="input_psw_msg"></label><br>
+重复密码<input type="password" id="input_reg_psw2" ></input><br>
     <button id="reg_button"  type="button">注册</button>
 
 </form>
